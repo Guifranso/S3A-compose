@@ -52,6 +52,9 @@ fun MenuScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ){
+                Text(
+                    text = "S3A"
+                )
                 Button(
                     onClick = {
                         Log.i(TAG, "MenuScreen: funcionou")
@@ -63,7 +66,20 @@ fun MenuScreen(
                         .requiredHeight(56.dp),
                 ) {
                     Text(
-                        text = "Submit")
+                        text = "Checagem inicial")
+                }
+                Button(
+                    onClick = {
+                        Log.i(TAG, "MenuScreen: funcionou")
+                    },
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                        .requiredHeight(56.dp),
+                ) {
+                    Text(
+                        text = "Checagem final")
                 }
             }
         }
