@@ -8,34 +8,28 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import br.com.arcom.s3a.ui.login.navigation.LoginDestination
 import br.com.arcom.s3a.ui.login.navigation.login
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun S3ANavHost(
     navController: NavHostController,
-    currentDestination: NavDestination?,
     onBackClick: () -> Unit,
-    openDrawer: () -> Unit,
-    onNavigateToDestination: (S3ANavigationDestination, String) -> Unit,
     modifier: Modifier = Modifier,
-    startDestination: String = LoginDestination.route
+    startDestination: String = LoginDestination.route,
 ) {
-    AnimatedNavHost(
+    NavHost(
         navController = navController,
         startDestination = startDestination,
-        enterTransition = { defaultS3AEnterTransition(initialState, targetState) },
-        exitTransition = { defaultS3AExitTransition(initialState, targetState) },
-        popEnterTransition = { defaultS3APopEnterTransition() },
-        popExitTransition = { defaultS3APopExitTransition() },
         modifier = modifier,
     ) {
         login(
             onBackClick,
         )
     }
+
 }
 
 @ExperimentalAnimationApi

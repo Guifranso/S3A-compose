@@ -9,8 +9,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
@@ -44,48 +46,54 @@ fun LoginScreen(
     var usuario by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.padding(16.dp)
-    ) {
+    Scaffold(
+        containerColor = MaterialTheme.colorScheme.background,
+        modifier = Modifier.fillMaxSize(),
+    ){ innerPadding ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ){
-            Text(
-                text = "S3A",
-                modifier = Modifier,
-                fontWeight = FontWeight.Black,
-                fontSize = 48.sp,
-                color = MaterialTheme.colorScheme.primary,
-            )
-            OutlinedTextField(
-                value = usuario,
-                onValueChange = { usuario = it },
-                label = { Text("Email") },
-                modifier = Modifier.fillMaxWidth()
-            )
-            OutlinedTextField(
-                value = senha,
-                onValueChange = { senha = it },
-                label = { Text("Password") },
-                modifier = Modifier.fillMaxWidth(),
-                visualTransformation = PasswordVisualTransformation(),
-            )
-            Button(
-                onClick = {
-//                    handleLogin(usuario, senha)
-                          },
-                shape = RoundedCornerShape(8.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 8.dp)
-                    .requiredHeight(56.dp)
-                ,
-            ) {
+            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(innerPadding).fillMaxSize()
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ){
                 Text(
-                    text = "Submit")
+                    text = "S3A",
+                    modifier = Modifier,
+                    fontWeight = FontWeight.Black,
+                    fontSize = 48.sp,
+                    color = MaterialTheme.colorScheme.primary,
+                )
+                OutlinedTextField(
+                    value = usuario,
+                    onValueChange = { usuario = it },
+                    label = { Text("Email") },
+                    modifier = Modifier.fillMaxWidth()
+                )
+                OutlinedTextField(
+                    value = senha,
+                    onValueChange = { senha = it },
+                    label = { Text("Password") },
+                    modifier = Modifier.fillMaxWidth(),
+                    visualTransformation = PasswordVisualTransformation(),
+                )
+                Button(
+                    onClick = {
+//                    handleLogin(usuario, senha)
+                    },
+                    shape = RoundedCornerShape(8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp)
+                        .requiredHeight(56.dp)
+                    ,
+                ) {
+                    Text(
+                        text = "Submit")
+                }
             }
         }
     }

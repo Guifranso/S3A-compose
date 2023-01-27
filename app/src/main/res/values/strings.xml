@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">s3a</string>
     <string name="login_title">Login</string>
+    <string name="sem_internet">Sem internet</string>
 </resources>
