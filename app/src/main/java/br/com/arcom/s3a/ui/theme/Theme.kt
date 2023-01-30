@@ -15,25 +15,44 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 
-private val DarkColorScheme = darkColorScheme(
-    primary = primaryColor,
-    secondary = secondaryColor,
+private val DarkColorPalette = darkColorScheme(
+    primary = PrimaryColorDark,
+    onPrimary = OnPrimaryColorDark,
+    primaryContainer = PrimaryColorContainerDark,
+    onPrimaryContainer = OnPrimaryColorContainerDark,
+    secondary = SecondaryColorDark,
+    onSecondary = OnSecondaryColorDark,
+    secondaryContainer = SecondaryColorContainerDark,
+    onSecondaryContainer = OnSecondaryColorContainerDark,
+    error = ErrorColorDark,
+    onError = OnErrorColorDark,
+    errorContainer = ErrorColorContainerDark,
+    onErrorContainer = OnErrorColorContainerDark,
+    background = BackgroundColorDark,
+    onBackground = OnBackgroundColorDark,
+    surface = SurfaceColorDark,
+    onSurface = OnSurfaceColorDark
 )
 
-private val LightColorScheme = lightColorScheme(
-    primary = primaryColor,
-    secondary = secondaryColor,
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+private val LightColorPalette = lightColorScheme(
+    primary = PrimaryColorLight,
+    onPrimary = OnPrimaryColorLight,
+    primaryContainer = PrimaryColorContainerLight,
+    onPrimaryContainer = OnPrimaryColorContainerLight,
+    secondary = SecondaryColorLight,
+    onSecondary = OnSecondaryColorLight,
+    secondaryContainer = SecondaryColorContainerLight,
+    onSecondaryContainer = OnSecondaryColorContainerLight,
+    error = ErrorColorLight,
+    onError = OnErrorColorLight,
+    errorContainer = ErrorColorContainerLight,
+    onErrorContainer = OnErrorColorContainerLight,
+    background = BackgroundColorLight,
+    onBackground = OnBackgroundColorLight,
+    surface = SurfaceColorLight,
+    onSurface = OnSurfaceColorLight
 )
+
 
 @Composable
 fun S3aTheme(
@@ -47,8 +66,8 @@ fun S3aTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> DarkColorPalette
+        else -> LightColorPalette
     }
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -60,7 +79,7 @@ fun S3aTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = S3aTypography,
         content = content
     )
 }
