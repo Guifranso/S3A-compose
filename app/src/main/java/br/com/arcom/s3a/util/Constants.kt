@@ -12,7 +12,8 @@ val LOCALDATETIME_FORMATS = listOf(
     "dd-MM-yyyy HH:mm:ss",
     "dd-MM-yyyy HH:mm",
     "dd/MM/yyyy HH:mm",
-    "yyyy-MM-dd'T'HH:mm:ss.SSSSSSS"
+    "yyyy-MM-dd'T'HH:mm:ss.SSSSSSS",
+    "yyyy-MM-dd'T'HH:mm:ss"
 )
 const val LOCALDATE_PADRAO = "yyyy-MM-dd"
 const val LOCALDATETIME_PADRAO = "yyyy-MM-dd HH:mm:ss"

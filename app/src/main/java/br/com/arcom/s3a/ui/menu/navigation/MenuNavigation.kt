@@ -14,10 +14,12 @@ object MenuDestination : S3ANavigationDestination {
 @OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.menu(
     onBackClick: () -> Unit,
+    navigateToChecagem: () -> Unit,
 ) {
     composable(
         route = MenuDestination.route,
     ) {
-        MenuRoute(onBackClick)
+        MenuRoute(onBackClick,
+            navigateToChecagem = navigateToChecagem)
     }
 }

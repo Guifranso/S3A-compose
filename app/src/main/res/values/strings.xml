@@ -9,4 +9,5 @@
     <string name="msg_tela_erro_4">Se você não fez nenhum desses \n sugeridos acima, entre em contato \n conosco para que possamos lhe ajudar!</string>
     <string name="erro_ao_buscar_dados">Erro ao buscar dados</string>
     <string name="voce_nao_possui_dados">Você não possui dados</string>
+    <string name="menu">Menu</string>
 </resources>
