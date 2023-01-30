@@ -9,9 +9,11 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import br.com.arcom.s3a.ui.cameraMlkit.navigation.CameraDestination
+import br.com.arcom.s3a.ui.cameraMlkit.navigation.camera
+import br.com.arcom.s3a.ui.cameraMlkit.navigation.navigateToCamera
 import br.com.arcom.s3a.ui.menu.navigation.MenuDestination
 import br.com.arcom.s3a.ui.menu.navigation.menu
-import com.google.accompanist.navigation.animation.AnimatedNavHost
 
 @Composable
 fun S3ANavHost(
@@ -27,6 +29,10 @@ fun S3ANavHost(
     ) {
         menu(
             onBackClick,
+            navigateToCamera = navController::navigateToCamera
+        )
+        camera(
+            onBackClick
         )
     }
 
