@@ -123,6 +123,15 @@ class NetworkS3aApi(
         return retrofit().create(TokenPlayService::class.java)
     }
 
+    fun appLocationService(): LocationService {
+        return retrofit().create(LocationService::class.java)
+    }
+
+    fun appCronogramaService(): CronogramaService {
+        return retrofit().create(CronogramaService::class.java)
+    }
+
+
     fun updateTokenPlay(): String? {
         return runBlocking {
             try {

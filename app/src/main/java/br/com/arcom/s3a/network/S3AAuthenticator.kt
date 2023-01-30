@@ -13,7 +13,8 @@ class S3AAuthenticator(val api: NetworkS3aApi) : Authenticator {
             )
         }
         val token = api.updateToken()
-        val tokenPlay = api.updateTokenPlay()
+//        val tokenPlay = api.updateTokenPlay()
+        val tokenPlay = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNTs0OzIwMjMtMDEtMzA7MjM3NmZlZWEtY2UxMC00OGY3LWFhMTUtYmUxMDdlOWU1Mzc2IiwiZXhwIjoxNjc3NjAzMDUyfQ.ho6P_-obCIERr1pOFHjvM1xnqyIZcEPXSK9t52TltLk"
         return response.request.newBuilder()
             .header("Authorization", "Basic $token,Bearer $tokenPlay").build()
     }

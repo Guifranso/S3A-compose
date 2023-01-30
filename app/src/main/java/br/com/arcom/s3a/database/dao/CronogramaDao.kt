@@ -6,12 +6,16 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import br.com.arcom.s3a.database.entity.CronogramaEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 abstract class CronogramaDao : EntityDao<CronogramaEntity>() {
 
     @Query("SELECT * from cronogramas")
     abstract fun buscarCronogramas(): PagingSource<Int, CronogramaEntity>
+
+    @Query("SELECT * from cronogramas")
+    abstract fun buscarCronogramasStream(): Flow<List<CronogramaEntity>>
 
     @Query("SELECT * from cronogramas WHERE id = :id")
     abstract fun buscarCronogramasPorId(id: Long): PagingSource<Int, CronogramaEntity>
@@ -21,4 +25,7 @@ abstract class CronogramaDao : EntityDao<CronogramaEntity>() {
 
     @Delete
     abstract suspend fun deleteCronograma(cronograma: CronogramaEntity)
+
+    @Query("DELETE FROM cronogramas")
+    abstract suspend fun deleteAll()
 }
