@@ -22,9 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toFile
 import androidx.hilt.navigation.compose.hiltViewModel
 import br.com.arcom.s3a.ui.commons.LocationHelper
-import br.com.arcom.s3a.ui.menu.MenuScreen
+import br.com.arcom.s3a.util.ImageRotationUtil
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.firebase.FirebaseApp
@@ -34,6 +35,9 @@ import java.io.ByteArrayOutputStream
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.text.FirebaseVisionText
+import java.io.File
+import java.io.FileOutputStream
+import java.time.LocalDateTime
 
 @ExperimentalMaterial3Api
 @Composable
@@ -111,20 +115,25 @@ fun LocationButton(inputKm: String, b: Boolean) {
         contract = ActivityResultContracts.TakePicture(),
         onResult = { success ->
             if (uri != null && success) {
+                val file = File(context.filesDir, "${LocalDateTime.now()}.jpg")
+                if (!file.exists()) {
+                    file.createNewFile()
+                }
                 val inputStream = context.contentResolver.openInputStream(uri!!)
-                bitmap = BitmapFactory.decodeStream(inputStream)
+                val outputStream = FileOutputStream(file)
+                inputStream.use { input ->
+                    outputStream.use { output ->
+                        input?.copyTo(output)
+                    }
+                }
+                bitmap = ImageRotationUtil.rotateAndCompressImage(file)
             }
         }
     )
 
     LaunchedEffect(location, bitmap) {
         if (location != null && bitmap != null) {
-            val matrix = Matrix()
-            matrix.postRotate(90f)
-            FirebaseApp.initializeApp(context)
-            val rotatedBitmap =
-                Bitmap.createBitmap(bitmap!!, 0, 0, bitmap!!.width, bitmap!!.height, matrix, true)
-            if (rotatedBitmap != null) recognizeText(rotatedBitmap!!, location!!, inputKm, context)
+            recognizeText(bitmap!!, location!!, inputKm, context)
         }
     }
 
@@ -183,9 +192,9 @@ private fun processResultText(
             .any { it == inputKm!!.toIntOrNull() }) {
 
         Toast.makeText(context, "Validado", Toast.LENGTH_SHORT).show()
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.PNG, 75, byteArrayOutputStream)
-        val base64 = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT)
+//        val byteArrayOutputStream = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 75, byteArrayOutputStream)
+//        val base64 = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT)
 //        Log.d("KILO", base64)
         Log.d("KILO", resultText.text)
         Log.d("KILO", location.latitude.toString())
