@@ -8,7 +8,7 @@ import androidx.core.content.FileProvider.getUriForFile
 import java.io.File
 
 
-fun getImageUri(context: Context): Uri {
+fun getImageUri(context: Context): Pair<File, Uri> {
     // 1
     val directory = File(context.cacheDir, "images")
     directory.mkdirs()
@@ -23,9 +23,11 @@ fun getImageUri(context: Context): Uri {
     // 3
     val authority = context.packageName + ".fileprovider"
     // 4
-    return getUriForFile(
-        context,
-        authority,
-        file,
+    return Pair(
+        file, getUriForFile(
+            context,
+            authority,
+            file,
+        )
     )
 }

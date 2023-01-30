@@ -101,7 +101,7 @@ fun CameraMlkitScreen(
 fun LocationButton(inputKm: String, b: Boolean) {
     val context = LocalContext.current
     var location by remember { mutableStateOf<Location?>(null) }
-    var uri by remember { mutableStateOf<Uri?>(null) }
+    var file by remember { mutableStateOf<Pair<File,Uri>?>(null) }
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
     val permissions = rememberMultiplePermissionsState(
         permissions = listOf(
@@ -114,19 +114,8 @@ fun LocationButton(inputKm: String, b: Boolean) {
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture(),
         onResult = { success ->
-            if (uri != null && success) {
-                val file = File(context.filesDir, "${LocalDateTime.now()}.jpg")
-                if (!file.exists()) {
-                    file.createNewFile()
-                }
-                val inputStream = context.contentResolver.openInputStream(uri!!)
-                val outputStream = FileOutputStream(file)
-                inputStream.use { input ->
-                    outputStream.use { output ->
-                        input?.copyTo(output)
-                    }
-                }
-                bitmap = ImageRotationUtil.rotateAndCompressImage(file)
+            if (file != null && success) {
+                bitmap = ImageRotationUtil.rotateAndCompressImage(file!!.first)
             }
         }
     )
@@ -144,8 +133,8 @@ fun LocationButton(inputKm: String, b: Boolean) {
                 locationHelper.displayDistance {
                     location = it
                 }
-                uri = getImageUri(context)
-                cameraLauncher.launch(uri)
+                file = getImageUri(context)
+                cameraLauncher.launch(file!!.second)
             } else {
                 permissions.launchMultiplePermissionRequest()
             }
