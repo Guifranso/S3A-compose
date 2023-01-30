@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "33664699691",
+    "project_id": "sistemaaaa-d74f2",
+    "storage_bucket": "sistemaaaa-d74f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33664699691:android:d6bb34bdf8f5b1eb23496e",
+        "android_client_info": {
+          "package_name": "br.com.arcom.s3a"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "33664699691-9okonc32a77fs6o07nodrhrtpuchi9u1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMMjqF8xciZSsd90enTCcmkxHxsblyHMw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "33664699691-9okonc32a77fs6o07nodrhrtpuchi9u1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
