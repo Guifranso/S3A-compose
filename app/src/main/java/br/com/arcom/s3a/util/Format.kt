@@ -12,6 +12,8 @@ fun String.asNumber(): Boolean {
     }
 }
 
+fun String.getNumbers() = this.filter { it.isDigit() }.toIntOrNull()
+
 fun Bitmap.toBase64(): String {
     val byteArrayOutputStream = ByteArrayOutputStream()
     this.compress(Bitmap.CompressFormat.PNG, 75, byteArrayOutputStream)

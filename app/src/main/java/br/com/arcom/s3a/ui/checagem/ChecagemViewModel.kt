@@ -1,28 +1,21 @@
 package br.com.arcom.s3a.ui.checagem
 
 import android.graphics.Bitmap
-import android.location.Location
-import android.util.Base64
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.arcom.repplus.ui.commons.UiMessage
 import br.com.arcom.repplus.ui.commons.UiMessageManager
 import br.com.arcom.s3a.data.domain.SendChecagem
-import br.com.arcom.s3a.data.result.Result
-import br.com.arcom.s3a.data.result.asResult
 import br.com.arcom.s3a.ui.commons.ObservableLoadingCounter
 import br.com.arcom.s3a.ui.commons.collectStatus
-import br.com.arcom.s3a.ui.menu.ChecagensUiState
 import br.com.arcom.s3a.util.Logger
+import br.com.arcom.s3a.util.getNumbers
 import br.com.arcom.s3a.util.toBase64
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
-import com.google.firebase.ml.vision.text.FirebaseVisionText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.io.ByteArrayOutputStream
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,18 +39,17 @@ class ChecagemViewModel @Inject internal constructor(
             viewModelScope.launch {
                 validado.emit(
                     firebaseVisionText.textBlocks.flatMap { it.lines }
-                        .map {it.text.replace("[^\\d]".toRegex(), "").toIntOrNull()  }
-                        .any { it == inputKm!!.toIntOrNull() }
+                        .map { it.text.getNumbers() }
+                        .any { it == inputKm.toIntOrNull() }
                 )
-                firebaseVisionText.textBlocks.flatMap { it.lines }
-                    .map { Log.d("KILO", it.text) }
                 if (validado.value) {
                     km.emit(inputKm.toLong())
                     bitmap.emit(btp)
                 }
             }
         }.addOnFailureListener { e ->
-            Log.e("MainActivity", "Error: $e")
+            e.printStackTrace()
+            emitMessage("Erro ao verificar imagem!")
         }
     }
 
@@ -78,6 +70,12 @@ class ChecagemViewModel @Inject internal constructor(
                     }
                 )
             }
+        }
+    }
+
+    fun emitMessage(message: String) {
+        viewModelScope.launch {
+            uiMessageManager.emitMessage(UiMessage(message))
         }
     }
 
