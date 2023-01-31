@@ -49,7 +49,7 @@ class ChecagemViewModel @Inject internal constructor(
                         .map { it.text.toIntOrNull() }.any { it == inputKm!!.toIntOrNull() }
                 )
                 firebaseVisionText.textBlocks.flatMap { it.lines }
-                    .map { Log.d("KILO",it.text)}
+                    .map { Log.d("KILO", it.text) }
                 if (validado.value) {
                     km.emit(inputKm.toLong())
                     bitmap.emit(btp)
@@ -60,7 +60,7 @@ class ChecagemViewModel @Inject internal constructor(
         }
     }
 
-    fun sendChecagem() {
+    fun sendChecagemFoto(callback: () -> Unit) {
         viewModelScope.launch {
             if (validado.value) {
                 sendChecagem(
@@ -69,14 +69,23 @@ class ChecagemViewModel @Inject internal constructor(
                         bitmap.value!!.toBase64()
                     )
                 ).collectStatus(
-                    loadingState, logger, uiMessageManager
+                    loadingState,
+                    logger,
+                    uiMessageManager,
+                    callback = {
+                        callback()
+                    }
                 )
             }
         }
     }
 
     val checagemUiState: StateFlow<ChecagemUiState> =
-        combine(loadingState.observable, uiMessageManager.message, validado) { loading, uiMessage, validado ->
+        combine(
+            loadingState.observable,
+            uiMessageManager.message,
+            validado
+        ) { loading, uiMessage, validado ->
             ChecagemUiState(
                 loading, uiMessage, validado
             )

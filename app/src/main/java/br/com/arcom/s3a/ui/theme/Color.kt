@@ -2,7 +2,7 @@ package br.com.arcom.s3a.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-internal val PrimaryColorLight = Color(0xFF03CF3D)
+internal val PrimaryColorLight = Color(0xFF32CC0F)
 internal val OnPrimaryColorLight = Color(0xFFFFFFFF)
 internal val PrimaryColorContainerLight = Color(0xFFFA7973)
 internal val OnPrimaryColorContainerLight = Color(0xFF560E0E)

@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.arcom.s3a.R
@@ -70,6 +71,7 @@ fun MenuScreen(
                         Text(
                             style = MaterialTheme.typography.titleLarge,
                             text = "S3A",
+                            fontSize = 48.sp,
                             modifier = Modifier.padding(bottom = 48.dp),
                             color = MaterialTheme.colorScheme.onBackground
                         )
@@ -83,10 +85,11 @@ fun MenuScreen(
                                 containerColor = MaterialTheme.colorScheme.primary,
                                 contentColor = MaterialTheme.colorScheme.onPrimary
                             ),
+                            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp),
                             enabled = checagens.checagemInicial
                         ) {
                             Text(
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodyLarge,
                                 text = "Checagem inicial"
                             )
                         }
@@ -99,10 +102,12 @@ fun MenuScreen(
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = MaterialTheme.colorScheme.primary,
                                 contentColor = MaterialTheme.colorScheme.onPrimary
-                            ), enabled = checagensUiState.checagens.checagemFinal
+                            ),
+                            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp),
+                            enabled = checagensUiState.checagens.checagemFinal
                         ) {
                             Text(
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodyLarge,
                                 text = "Checagem final"
                             )
                         }
