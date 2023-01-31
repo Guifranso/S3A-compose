@@ -18,8 +18,8 @@ class BuscarChecagens @Inject constructor(
         return withContext(dispatchers.io) {
             cronogramaRepository.findCronogramas().map {
                 ChecagensRealizadas(
-                    checagemInicial = it.isEmpty(),
-                    checagemFinal = it.size == 1
+                    checagemInicial = it.firstOrNull(),
+                    checagemFinal = if (it.size >= 2) it[1] else null
                 )
             }
         }

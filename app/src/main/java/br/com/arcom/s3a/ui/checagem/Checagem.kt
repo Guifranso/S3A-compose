@@ -6,20 +6,28 @@ import android.graphics.Bitmap
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import br.com.arcom.s3a.R
 import br.com.arcom.s3a.ui.commons.components.DialogConfirmacao
 import br.com.arcom.s3a.util.ImageRotationUtil
 import br.com.arcom.s3a.util.asNumber
@@ -28,7 +36,6 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import kotlinx.coroutines.launch
 import java.io.File
-import kotlin.reflect.KFunction1
 
 
 @ExperimentalMaterial3Api
@@ -56,7 +63,7 @@ fun ChecagemScreen(
     recognizeText: (Bitmap, String) -> Unit,
     checagemUiState: ChecagemUiState,
     validado: Boolean,
-    sendChecagemFoto: (() -> Unit) ->Unit,
+    sendChecagemFoto: (() -> Unit) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     var input by remember { mutableStateOf("") }
@@ -64,14 +71,14 @@ fun ChecagemScreen(
     var file by remember { mutableStateOf<Pair<File, Uri>?>(null) }
     var openDialog by remember { mutableStateOf(false) }
 
-    if (openDialog){
+    if (openDialog) {
         DialogConfirmacao(closeDialog = { openDialog = false },
-        title = "Confirmar envio?",
-        confirmClick = {
-            sendChecagemFoto{
+            title = "Confirmar envio?",
+            confirmClick = {
+                sendChecagemFoto {
 
-            }
-        })
+                }
+            })
     }
 
     val cameraLauncher = rememberLauncherForActivityResult(
@@ -107,16 +114,33 @@ fun ChecagemScreen(
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize(),
+        topBar = {
+            CenterAlignedTopAppBar(title = { Text(text = stringResource(id = R.string.checagem)) },
+                navigationIcon = {
+                    IconButton(onClick = { onBackClick() }) {
+                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Icone voltar")
+                    }
+                })
+        }
     ) { innerPadding ->
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
             modifier = Modifier
                 .padding(innerPadding)
                 .fillMaxSize(),
             contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp)
         ) {
             item {
+
+                Image(
+                    painter = painterResource(id = R.drawable.ic_car),
+                    contentDescription = "Image travel",
+                    modifier = Modifier
+                        .fillMaxWidth(0.9f)
+                        .height(200.dp)
+                        .clip(RoundedCornerShape(16.dp)),
+                    contentScale = ContentScale.Crop
+                )
 
                 Text(
                     style = MaterialTheme.typography.bodyLarge,

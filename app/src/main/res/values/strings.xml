@@ -10,4 +10,12 @@
     <string name="erro_ao_buscar_dados">Erro ao buscar dados</string>
     <string name="voce_nao_possui_dados">Você não possui dados</string>
     <string name="menu">Menu</string>
+    <string name="bem_vindo">Bem vindo ao S3A, %1$s</string>
+    <string name="acessor">Acessor</string>
+    <string name="s3a">S3A</string>
+    <string name="checagem_inicial">Checagem inicial</string>
+    <string name="checagem_final">Checagem final</string>
+    <string name="sobre_s3a">Sobre o S3A</string>
+    <string name="ok">Ok</string>
+    <string name="checagem">Checagem</string>
 </resources>

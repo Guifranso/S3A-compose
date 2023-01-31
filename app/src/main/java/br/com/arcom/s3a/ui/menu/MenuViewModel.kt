@@ -2,28 +2,29 @@ package br.com.arcom.s3a.ui.menu
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.arcom.repplus.ui.commons.UiMessage
 import br.com.arcom.repplus.ui.commons.UiMessageManager
+import br.com.arcom.s3a.auth.AuthManager
+import br.com.arcom.s3a.auth.AuthState
 import br.com.arcom.s3a.data.domain.BuscarChecagens
 import br.com.arcom.s3a.data.domain.SalvarCronogramas
 import br.com.arcom.s3a.data.model.ChecagensRealizadas
+import br.com.arcom.s3a.data.result.Result
 import br.com.arcom.s3a.data.result.asResult
 import br.com.arcom.s3a.ui.commons.ObservableLoadingCounter
 import br.com.arcom.s3a.ui.commons.collectStatus
 import br.com.arcom.s3a.util.Logger
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import br.com.arcom.s3a.data.result.Result
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel
 class MenuViewModel @Inject internal constructor(
     private val salvarCronogramas: SalvarCronogramas,
     private val buscarChecagens: BuscarChecagens,
-    private val logger: Logger
+    private val logger: Logger,
+    private val authManager: AuthManager
 ) : ViewModel() {
 
     private val loadingState = ObservableLoadingCounter()
@@ -36,22 +37,50 @@ class MenuViewModel @Inject internal constructor(
         }
     }
 
-    val checagensUiState: StateFlow<ChecagensUiState> =
-        buscarChecagens.flow.asResult().map {
-            when(it){
-                is Result.Success -> ChecagensUiState.Success(it.data)
+    fun clearMessages() {
+        viewModelScope.launch {
+            uiMessageManager.clearAll()
+        }
+    }
+
+    val menuUiState: StateFlow<MenuUiState> =
+        combine(
+            buscarChecagens.flow.asResult(),
+            authManager.authState,
+            loadingState.observable,
+            uiMessageManager.message
+        ) { checagens, authManager, loading, message ->
+            val checagem = when (checagens) {
+                is Result.Success -> ChecagensUiState.Success(checagens.data)
                 is Result.Loading -> ChecagensUiState.Loading
                 is Result.Error -> ChecagensUiState.Error
             }
+            MenuUiState(
+                checagem,
+                authManager,
+                loading,
+                message
+            )
         }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = ChecagensUiState.Loading
+            initialValue = MenuUiState.Empty
         )
 
     init {
         updateChecagens()
         buscarChecagens(BuscarChecagens.Params())
+    }
+}
+
+data class MenuUiState(
+    val checagensUiState: ChecagensUiState = ChecagensUiState.Loading,
+    val authState: AuthState? = null,
+    val loading: Boolean = false,
+    val uiMessage: UiMessage? = null
+) {
+    companion object {
+        val Empty = MenuUiState()
     }
 }
 

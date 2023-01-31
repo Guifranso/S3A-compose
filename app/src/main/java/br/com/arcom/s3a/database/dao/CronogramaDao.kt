@@ -15,7 +15,7 @@ abstract class CronogramaDao : EntityDao<CronogramaEntity>() {
     abstract fun buscarCronogramas(): PagingSource<Int, CronogramaEntity>
 
     @Query("SELECT * from cronogramas")
-    abstract fun buscarCronogramasStream(): Flow<List<CronogramaEntity>>
+    abstract fun buscarCronogramasStream(): Flow<List<CronogramaEntity?>>
 
     @Query("SELECT * from cronogramas WHERE id = :id")
     abstract fun buscarCronogramasPorId(id: Long): PagingSource<Int, CronogramaEntity>

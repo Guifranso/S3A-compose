@@ -47,7 +47,7 @@ class CronogramaRepository @Inject constructor(
 
     fun findCronogramas() = cronogramaDao.buscarCronogramasStream().map {
         it.map { cronograma ->
-            cronograma.asExternalModel()
+            cronograma?.asExternalModel()
         }
     }
 

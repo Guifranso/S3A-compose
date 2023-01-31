@@ -12,7 +12,7 @@ import kotlinx.serialization.json.Json
 import javax.inject.Named
 import javax.inject.Singleton
 
-const val BASE_URL = "https://931d-200-251-86-133.sa.ngrok.io/"
+const val BASE_URL = "https://5bd6-200-251-86-133.sa.ngrok.io"
 
 @InstallIn(SingletonComponent::class)
 @Module(includes = [ApiServiceModule::class])

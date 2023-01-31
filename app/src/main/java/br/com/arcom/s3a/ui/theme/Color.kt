@@ -2,7 +2,7 @@ package br.com.arcom.s3a.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-internal val PrimaryColorLight = Color(0xFF32CC0F)
+internal val PrimaryColorLight = Color(0xFF65E096)
 internal val OnPrimaryColorLight = Color(0xFFFFFFFF)
 internal val PrimaryColorContainerLight = Color(0xFFFA7973)
 internal val OnPrimaryColorContainerLight = Color(0xFF560E0E)
@@ -19,7 +19,7 @@ internal val OnBackgroundColorLight = Color(0xFF1C1B1F)
 internal val SurfaceColorLight = Color(0xFFE4E4E4)
 internal val OnSurfaceColorLight = Color(0xFF1C1B1F)
 
-internal val PrimaryColorDark = Color(0xFF177E34)
+internal val PrimaryColorDark = Color(0xFF82D3A2)
 internal val OnPrimaryColorDark = Color(0xFFFFFFFF)
 internal val PrimaryColorContainerDark = Color(0xFF880E0E)
 internal val OnPrimaryColorContainerDark = Color(0xFFF24F47)
@@ -32,6 +32,6 @@ internal val OnErrorColorDark = Color(0xFF601410)
 internal val ErrorColorContainerDark = Color(0xFF8C1D18)
 internal val OnErrorColorContainerDark = Color(0xFFF9DEDC)
 internal val BackgroundColorDark = Color(0xFF1C1B1F)
-internal val OnBackgroundColorDark = Color(0xFFE6E1E5)
+internal val OnBackgroundColorDark = Color(0xFFFFFFFF)
 internal val SurfaceColorDark = Color(0xFF383838)
 internal val OnSurfaceColorDark = Color(0xFFFFFFFF)
