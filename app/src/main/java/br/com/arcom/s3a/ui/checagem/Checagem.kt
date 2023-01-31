@@ -3,7 +3,6 @@ package br.com.arcom.s3a.ui.checagem
 
 import android.Manifest
 import android.graphics.Bitmap
-import android.location.Location
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -21,11 +20,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.arcom.s3a.util.ImageRotationUtil
-import br.com.arcom.s3a.util.LocationHelper
 import br.com.arcom.s3a.util.asNumber
 import br.com.arcom.s3a.util.getImageUri
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import java.io.File
 import kotlin.reflect.KFunction0
@@ -42,7 +41,8 @@ fun ChecagemRoute(
         onBackClick = onBackClick,
         recognizeText = viewModel::recognizeText,
         checagemUiState = checagemUiState.value,
-        sendChecagem = viewModel::sendChecagem
+        sendChecagem = viewModel::sendChecagem,
+        validado = checagemUiState.value.validado
     )
 }
 
@@ -53,27 +53,26 @@ fun ChecagemScreen(
     onBackClick: () -> Unit,
     recognizeText: (Bitmap, String) -> Unit,
     checagemUiState: ChecagemUiState,
-    sendChecagem: KFunction0<Unit>
+    sendChecagem: () -> Unit,
+    validado: Boolean
 ) {
     val scope = rememberCoroutineScope()
     var input by remember { mutableStateOf("") }
     val context = LocalContext.current
-    var location by remember { mutableStateOf<Location?>(null) }
     var file by remember { mutableStateOf<Pair<File, Uri>?>(null) }
-    var bitmap by remember { mutableStateOf<Bitmap?>(null) }
 
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture(),
         onResult = { success ->
             if (file != null && success) {
-                bitmap = ImageRotationUtil.rotateAndCompressImage(file!!.first)
+                val bitmap = ImageRotationUtil.rotateAndCompressImage(file!!.first)
+                recognizeText(bitmap, input)
             }
         }
     )
 
     fun startCamera() {
         scope.launch {
-            location = LocationHelper(context).displayDistance()
             file = getImageUri(context)
             cameraLauncher.launch(file!!.second)
         }
@@ -91,12 +90,6 @@ fun ChecagemScreen(
             }
         }
     )
-
-    LaunchedEffect(location, bitmap) {
-        if (location != null && bitmap != null) {
-            recognizeText(bitmap!!, input)
-        }
-    }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -150,7 +143,7 @@ fun ChecagemScreen(
                         .fillMaxWidth()
                         .padding(top = 8.dp)
                         .requiredHeight(56.dp),
-                    enabled = input.isNotEmpty(),
+                    enabled = validado,
                 ) { Text("Enviar") }
             }
         }

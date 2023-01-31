@@ -48,6 +48,8 @@ class ChecagemViewModel @Inject internal constructor(
                     firebaseVisionText.textBlocks.flatMap { it.lines }
                         .map { it.text.toIntOrNull() }.any { it == inputKm!!.toIntOrNull() }
                 )
+                firebaseVisionText.textBlocks.flatMap { it.lines }
+                    .map { Log.d("KILO",it.text)}
                 if (validado.value) {
                     km.emit(inputKm.toLong())
                     bitmap.emit(btp)
@@ -74,9 +76,9 @@ class ChecagemViewModel @Inject internal constructor(
     }
 
     val checagemUiState: StateFlow<ChecagemUiState> =
-        combine(loadingState.observable, uiMessageManager.message) { loading, uiMessage ->
+        combine(loadingState.observable, uiMessageManager.message, validado) { loading, uiMessage, validado ->
             ChecagemUiState(
-                loading, uiMessage
+                loading, uiMessage, validado
             )
         }.stateIn(
             scope = viewModelScope,
@@ -87,7 +89,8 @@ class ChecagemViewModel @Inject internal constructor(
 
 data class ChecagemUiState(
     val loading: Boolean = false,
-    val uiMessage: UiMessage? = null
+    val uiMessage: UiMessage? = null,
+    val validado: Boolean = false,
 ) {
     companion object {
         val Empty = ChecagemUiState()
