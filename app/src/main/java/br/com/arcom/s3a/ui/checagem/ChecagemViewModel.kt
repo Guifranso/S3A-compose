@@ -46,7 +46,8 @@ class ChecagemViewModel @Inject internal constructor(
             viewModelScope.launch {
                 validado.emit(
                     firebaseVisionText.textBlocks.flatMap { it.lines }
-                        .map { it.text.toIntOrNull() }.any { it == inputKm!!.toIntOrNull() }
+                        .map {it.text.replace("[^\\d]".toRegex(), "").toIntOrNull()  }
+                        .any { it == inputKm!!.toIntOrNull() }
                 )
                 firebaseVisionText.textBlocks.flatMap { it.lines }
                     .map { Log.d("KILO", it.text) }
