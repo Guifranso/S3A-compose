@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRight
@@ -24,10 +23,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import br.com.arcom.s3a.R
+import br.com.arcom.s3a.data.model.TipoChecagem
 import br.com.arcom.s3a.ui.commons.components.AnimationError
 import br.com.arcom.s3a.ui.commons.components.DialogInfo
 import br.com.arcom.s3a.ui.commons.components.LoadingAnimation
 import br.com.arcom.s3a.ui.commons.components.SwipeDismissSnackbarHost
+import br.com.arcom.s3a.ui.theme.S3aRoundedShape
 import br.com.arcom.s3a.util.formatData
 
 @ExperimentalMaterial3Api
@@ -35,7 +36,7 @@ import br.com.arcom.s3a.util.formatData
 fun MenuRoute(
     onBackClick: () -> Unit,
     viewModel: MenuViewModel = hiltViewModel(),
-    navigateToChecagem: () -> Unit,
+    navigateToChecagem: (TipoChecagem) -> Unit,
 ) {
     val menuUiState = viewModel.menuUiState.collectAsStateWithLifecycle()
 
@@ -55,7 +56,7 @@ fun MenuScreen(
     onBackClick: () -> Unit,
     menuUiState: MenuUiState,
     refresh: () -> Unit,
-    navigateToChecagem: () -> Unit,
+    navigateToChecagem: (TipoChecagem) -> Unit,
     clearMessages: () -> Unit,
 ) {
 
@@ -164,14 +165,14 @@ fun MenuScreen(
                             )
 
                             Surface(
-                                onClick = { navigateToChecagem() },
+                                onClick = { navigateToChecagem(TipoChecagem.INICIO) },
                                 modifier = Modifier
                                     .fillMaxWidth(0.9f)
                                     .padding(top = 16.dp),
-                                shape = RoundedCornerShape(16.dp),
+                                shape = S3aRoundedShape,
                                 color = MaterialTheme.colorScheme.secondary,
                                 shadowElevation = 2.dp,
-                                enabled = checagens.checagemInicial != null
+                                enabled = checagens.checagemInicial == null
                             ) {
                                 Row(
                                     modifier = Modifier
@@ -221,11 +222,11 @@ fun MenuScreen(
 
                             if (checagens.checagemInicial != null) {
                                 Surface(
-                                    onClick = { navigateToChecagem() },
+                                    onClick = { navigateToChecagem(TipoChecagem.FINAL) },
                                     modifier = Modifier
                                         .fillMaxWidth(0.9f)
                                         .padding(top = 16.dp),
-                                    shape = RoundedCornerShape(16.dp),
+                                    shape = S3aRoundedShape,
                                     color = MaterialTheme.colorScheme.secondary,
                                     shadowElevation = 2.dp,
                                     enabled = checagens.checagemFinal == null

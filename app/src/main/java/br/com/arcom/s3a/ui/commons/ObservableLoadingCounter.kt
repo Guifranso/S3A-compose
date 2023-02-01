@@ -40,8 +40,7 @@ suspend fun Flow<InvokeStatus>.collectStatus(
         InvokeSuccess -> counter.removeLoader()
         is InvokeError -> {
             logger?.i(status.throwable)
-            Log.d("exception", status.throwable.message?: "")
-            uiMessageManager?.emitMessage(UiMessage(status.throwable))
+            uiMessageManager?.emitMessage(UiMessage("Ocorreu um erro!"))
             counter.removeLoader()
         }
         else -> { counter.removeLoader() }

@@ -87,7 +87,7 @@ class MainActivity : AppActivity() {
                         ) {
 
                             Image(
-                                painter = painterResource(id = R.drawable.ic_launcher_background),
+                                painter = painterResource(id = R.drawable.ic_logo),
                                 contentDescription = "Logo splash screen",
                                 modifier = Modifier
                                     .requiredWidth(100.dp)

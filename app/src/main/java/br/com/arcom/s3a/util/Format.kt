@@ -12,7 +12,7 @@ fun String.asNumber(): Boolean {
     }
 }
 
-fun String.getNumbers() = this.filter { it.isDigit() }.toIntOrNull()
+fun String.getNumbers() = this.filter { it.isDigit() }.toLongOrNull()
 
 fun Bitmap.toBase64(): String {
     val byteArrayOutputStream = ByteArrayOutputStream()

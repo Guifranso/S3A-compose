@@ -18,4 +18,16 @@
     <string name="sobre_s3a">Sobre o S3A</string>
     <string name="ok">Ok</string>
     <string name="checagem">Checagem</string>
+    <string name="quilometragem">Quilometragem</string>
+    <string name="foto">Foto</string>
+    <string name="finalizar">Finalizar</string>
+    <string name="km">Km</string>
+    <string name="quilometragem_odometro">Digite a quilometragem indicada no odômetro</string>
+    <string name="quilometragem_variavel">%1$s km especificados no odômetro</string>
+    <string name="foto_vericada">Foto verificada</string>
+    <string name="tirar_foto">Tirar foto</string>
+    <string name="tirar_novamente">Tirar novamente</string>
+    <string name="anterior">Anterior</string>
+    <string name="enviar">Enviar</string>
+    <string name="proximo">Próximo</string>
 </resources>

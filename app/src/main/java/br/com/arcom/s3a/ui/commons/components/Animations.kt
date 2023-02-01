@@ -148,3 +148,42 @@ fun LoadingAnimation(
         )
     }
 }
+
+@Composable
+fun EnvioAnimationSucessSheet(
+    starAnimation: Boolean,
+    funcaoSucesso: () -> Unit,
+) {
+
+    val speed by remember {
+        mutableStateOf(2f)
+    }
+    val composition by rememberLottieComposition(
+        LottieCompositionSpec
+            .RawRes(R.raw.check)
+    )
+
+    val progress by animateLottieCompositionAsState(
+        composition,
+        isPlaying = starAnimation,
+        speed = speed,
+        restartOnPlay = false
+    )
+
+    Box(
+        Modifier.fillMaxSize()
+    ) {
+        LottieAnimation(
+            composition,
+            progress,
+            modifier = Modifier
+                .fillMaxSize(0.5f)
+                .align(Alignment.Center),
+            contentScale = ContentScale.Crop
+        )
+    }
+
+    if (progress == 1f) {
+        funcaoSucesso()
+    }
+}

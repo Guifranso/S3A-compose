@@ -35,3 +35,7 @@ internal val BackgroundColorDark = Color(0xFF1C1B1F)
 internal val OnBackgroundColorDark = Color(0xFFFFFFFF)
 internal val SurfaceColorDark = Color(0xFF383838)
 internal val OnSurfaceColorDark = Color(0xFFFFFFFF)
+
+fun Color.divider(): Color { return this.copy(0.2f) }
+fun Color.textoSecundario(): Color { return this.copy(0.6f) }
+fun Color.lightColor(): Color { return this.copy(0.3f) }

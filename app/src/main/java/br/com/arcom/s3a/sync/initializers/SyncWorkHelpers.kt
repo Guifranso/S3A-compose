@@ -52,7 +52,7 @@ private fun Context.syncWorkNotification(): Notification {
         SyncNotificationChannelID
     )
         .setSmallIcon(
-            R.drawable.ic_launcher_background
+            R.drawable.ic_logo
         )
         .setContentTitle(getString(R.string.app_name))
         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
